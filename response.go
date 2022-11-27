@@ -2,6 +2,7 @@ package godo
 
 import (
 	"encoding/json"
+	"net/http"
 )
 
 // Response returns back the http code, type of data, and the presigned url to the user.
@@ -25,7 +26,13 @@ func (r *Response) AddHeader(key, value string) {
 }
 
 func (r *Response) ToMap() map[string]interface{} {
-	if rJSON, err := json.Marshal(*r); err == nil {
+	response := *r
+	// There is no 0 status code so give a default value.
+	if response.StatusCode == 0 {
+		response.StatusCode = http.StatusOK
+	}
+
+	if rJSON, err := json.Marshal(response); err == nil {
 		var output map[string]interface{}
 		if err = json.Unmarshal(rJSON, &output); err == nil {
 			return output
