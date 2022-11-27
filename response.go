@@ -9,24 +9,26 @@ import (
 // Digital Ocean serverless function / manager. Calling ToMap() will return the
 // ResponseMap that will apply the interface.
 type Response struct {
-	// StatusCode is the http code that will be returned back to the user.
-	StatusCode int `json:"statusCode,omitempty"`
-	// Headers is the information about the type of data being returned back.
-	Headers map[string]string `json:"headers,omitempty"`
-	// Body will contain the presigned url to upload or download files.
-	Body string `json:"body,omitempty"`
+	StatusCode int               `json:"statusCode,omitempty"`
+	Headers    map[string]string `json:"headers,omitempty"`
+	Body       string            `json:"body,omitempty"`
 }
 
+// NewResponseJSON - Creates a Response struct with the application/json header
+// Content-Type already added.
 func NewResponseJSON() Response {
 	return Response{
 		Headers: map[string]string{"Content-Type": "application/json"},
 	}
 }
 
+// AddHeader - Adds a value to the header.
 func (r *Response) AddHeader(key, value string) {
 	r.Headers[key] = value
 }
 
+// ToMap - Returns a ResponseMap object that can be returned from the Main
+// function of a serverless function package.
 func (r *Response) ToMap() ResponseMap {
 	response := *r
 	// There is no 0 status code so give a default value.
@@ -44,4 +46,5 @@ func (r *Response) ToMap() ResponseMap {
 	return nil
 }
 
+// ResponseMap can be returned from the Main function of a serverless function.
 type ResponseMap map[string]interface{}

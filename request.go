@@ -1,5 +1,10 @@
 package godo
 
+// Request - Represents the incoming Digital Ocean serverless request. Ideally
+// the args parameter in the Main function should have this type.
+//
+// NOTE: The input to Main will be if called from the dashboard without
+// populating the parameters field.
 type Request map[string]interface{}
 
 func (r Request) GetHeaders() map[string]interface{} {
