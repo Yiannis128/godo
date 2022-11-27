@@ -1,6 +1,8 @@
 package godo
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 // Response returns back the http code, type of data, and the presigned url to the user.
 type Response struct {
@@ -23,9 +25,9 @@ func (r *Response) AddHeader(key, value string) {
 }
 
 func (r *Response) ToMap() map[string]interface{} {
-	if rJSON, err := json.Marshal(r); err != nil {
+	if rJSON, err := json.Marshal(*r); err == nil {
 		var output map[string]interface{}
-		if err = json.Unmarshal(rJSON, &output); err != nil {
+		if err = json.Unmarshal(rJSON, &output); err == nil {
 			return output
 		}
 	}
