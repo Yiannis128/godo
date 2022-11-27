@@ -5,7 +5,9 @@ import (
 	"net/http"
 )
 
-// Response returns back the http code, type of data, and the presigned url to the user.
+// Response - The object that represents the response that will be sent back to
+// Digital Ocean serverless function / manager. Calling ToMap() will return the
+// ResponseMap that will apply the interface.
 type Response struct {
 	// StatusCode is the http code that will be returned back to the user.
 	StatusCode int `json:"statusCode,omitempty"`
@@ -25,7 +27,7 @@ func (r *Response) AddHeader(key, value string) {
 	r.Headers[key] = value
 }
 
-func (r *Response) ToMap() map[string]interface{} {
+func (r *Response) ToMap() ResponseMap {
 	response := *r
 	// There is no 0 status code so give a default value.
 	if response.StatusCode == 0 {
@@ -41,3 +43,5 @@ func (r *Response) ToMap() map[string]interface{} {
 
 	return nil
 }
+
+type ResponseMap map[string]interface{}

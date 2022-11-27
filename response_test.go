@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewResponseJSON(t *testing.T) {
-	runMapTestsGeneric := func(m map[string]interface{}) {
+	runMapTestsGeneric := func(m godo.ResponseMap) {
 		if m == nil {
 			t.Fatal("map is nil")
 		}
